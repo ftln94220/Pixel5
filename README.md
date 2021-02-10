@@ -17,8 +17,8 @@
 - Connect phone to PC
 - Download ADB https://developer.android.com/studio/releases/platform-tools
 - Unzip folder and open cmd prompt in folder
-- #adb shell <for opening shell>
-- #su <for gaining root access in shell, accept pop up on phone>
+- #adb shell
+- #su
 - #resetprop ro.bootmode usbradio
 - #resetprop ro.build.type userdebug
 - #setprop sys.usb.config diag,diag_mdm,adb
