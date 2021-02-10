@@ -30,6 +30,6 @@
 - If you see unrecogonized pixel device in device manager, right click and install driver in above Qualcom drivers link: https://freebox.lear.ovh/share/evKn9vDPX_19qT4l/Mi5_Qualcomm_Drivers.zip
 
 
-Intention is to use above information to enable 5G on Pixel 5 with Free Mobile in France
+# Intention is to use above information to enable 5G on Pixel 5 with Free Mobile in France
 
 
