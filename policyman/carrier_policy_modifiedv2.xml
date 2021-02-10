@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #ifdef FEATURE_PIXEL_MODEM_POLICY_ENHANCEMENT -->
+<policy name        = "generic"
+        changelist  = "$Change: 10262256 $"
+        policy_ver  = "0121"
+>
+  <initial>
+    <!-- DE -->
+    <plmn_list name="plmn_vf-de">262-02 262-09</plmn_list>
+    <plmn_list name="plmn_dtag-de">262-01</plmn_list>
+    <plmn_list name="plmn_o2-de">262-03 262-05 262-07 262-08 262-11 262-17 262-77</plmn_list>
+    <!-- UK -->
+    <plmn_list name="plmn_ee-uk">234-30 234-31 234-32 234-33 234-34 235-01 235-02</plmn_list>
+    <plmn_list name="plmn_esn-uk">234-71</plmn_list>
+    <plmn_list name="plmn_vf-uk">234-15 235-91</plmn_list>
+    <plmn_list name="plmn_o2-uk">234-10</plmn_list>
+    <plmn_list name="plmn_hut3-uk">234-20 235-94</plmn_list>
+    <!-- FR -->
+    <plmn_list name="plmn_orange-fr">208-01 208-02</plmn_list>
+    <plmn_list name="plmn_boygues-fr">208-20 208-21 208-88</plmn_list>
+    <plmn_list name="plmn_sfr-fr">208-10 208-11 208-13</plmn_list>
+    <plmn_list name="plmn_freemobile-fr">208-15 208-16</plmn_list>
+    <!-- ES -->
+    <plmn_list name="plmn_orange-es">214-03</plmn_list>
+    <plmn_list name="plmn_vf-es">214-01</plmn_list>
+    <plmn_list name="plmn_movistar-es">214-07</plmn_list>
+    <!-- IT -->
+    <plmn_list name="plmn_tim-it">222-01</plmn_list>
+    <plmn_list name="plmn_vf-it">222-10</plmn_list>
+    <!-- NL -->
+    <plmn_list name="plmn_tmo-nl">204-16 204-20</plmn_list>
+    <plmn_list name="plmn_vf-nl">204-04</plmn_list>
+    <!-- TR -->
+    <plmn_list name="plmn_vf-tr">286-02</plmn_list>
+    <!-- CH -->
+    <plmn_list name="plmn_swisscom-ch">228-01</plmn_list>
+    <!-- SE -->
+    <plmn_list name="plmn_hut3-se">240-02</plmn_list>
+    <plmn_list name="plmn_telenor-se">242-01</plmn_list>
+    <plmn_list name="plmn_tele2-se">240-07</plmn_list>
+    <plmn_list name="plmn_telia-se">240-01</plmn_list>
+    <!-- NO -->
+    <plmn_list name="plmn_telia-no">242-02</plmn_list>
+    <plmn_list name="plmn_telenor-no">242-01</plmn_list>
+    <!-- DK -->
+    <plmn_list name="plmn_hut3-dk">238-06</plmn_list>
+    <plmn_list name="plmn_tdc-dk">238-01</plmn_list>
+    <plmn_list name="plmn_telenor-dk">238-02</plmn_list>
+    <!-- IE -->
+    <plmn_list name="plmn_hut3-ie">272-02 272-05</plmn_list>
+    <plmn_list name="plmn_vf-ie">272-01</plmn_list>
+
+    <!-- b/157702724: Enable DSS feature -->
+    <boolean_define name="carrier:dss_is_enabled" initial="true" />
+
+    <!-- b/159177716: DT NR band -->
+    <rf_band_list name="rf_bands_dt">
+      <nr5g_nsa_bands base="none">
+        <include> 0 2 27 77 </include>
+      </nr5g_nsa_bands>
+    </rf_band_list>
+
+    <actions>
+      <!-- Define intial UE mode as NORMAL -->
+      <!-- Add dualmode per QCT case 03858668-->
+      <ue_mode> NORMAL </ue_mode>
+      <feature single_sim="normal"> dualmmode </feature>
+
+      <rat_capability_if base="none">
+        <include> G W L 5G </include>
+      </rat_capability_if>
+    </actions>
+
+  </initial>
+
+  <!-- START RULE: DT NR Band -->
+  <if>
+    <imsi_plmn_in list="plmn_dtag-de" />
+    <then>
+      <rf_bands list="rf_bands_dt" />
+    </then>
+  </if>
+  <!-- END RULE: DT NR Band -->
+
+  <!-- START RULE: Follow vf-de requirement to change voice_domain_pref when roaming -->
+  <if>
+    <cond><imsi_plmn_in list="plmn_vf-de" /></cond>
+    <then>
+      <if>
+        <cond><serving_plmn_in list="plmn_vf-de" /></cond>
+        <then>
+          <voice_domain_pref mandatory="true"> IMS_PREF </voice_domain_pref>
+        </then>
+        <else>
+          <voice_domain_pref mandatory="true"> CS_ONLY </voice_domain_pref>
+        </else>
+      </if>
+    </then>
+  </if>
+  <!-- END RULE: Follow vf-de requirement to change voice_domain_pref when roaming -->
+
+  <!-- START RULE: Add VF carriers require to enable 5G roaming -->
+  <if>
+    <any_of>
+      <imsi_plmn_in list="plmn_vf-de" />
+      <imsi_plmn_in list="plmn_vf-uk" />
+      <imsi_plmn_in list="plmn_vf-es" />
+      <imsi_plmn_in list="plmn_vf-it" />
+      <imsi_plmn_in list="plmn_vf-ie" />
+    </any_of>
+    <then>
+      <if>
+        <any_of>
+          <serving_plmn_in list="plmn_vf-de" />
+          <serving_plmn_in list="plmn_vf-uk" />
+          <serving_plmn_in list="plmn_vf-es" />
+          <serving_plmn_in list="plmn_vf-it" />
+          <serving_plmn_in list="plmn_vf-ie" />
+        </any_of>
+        <then>
+          <rat_capability base="none">
+            <include> G W L 5G </include>
+          </rat_capability>
+          <stop />
+        </then>
+        <else>
+          <rat_capability base="none">
+            <include> G W L </include>
+          </rat_capability>
+          <stop />
+        </else>
+      </if>
+    </then>
+  </if>
+  <!-- END RULE: Add VF carriers require to enable 5G roaming -->
+
+  <!-- START RULE: Add VF carriers require to enable 5G roaming -->
+  <if>
+    <any_of>
+      <imsi_plmn_in list="plmn_tim-it" />
+      <imsi_plmn_in list="plmn_dtag-de" />
+    </any_of>
+    <then>
+      <if>
+        <any_of>
+          <serving_plmn_in list="plmn_tim-it" />
+          <serving_plmn_in list="plmn_dtag-de" />
+        </any_of>
+        <then>
+          <rat_capability base="none">
+            <include> G W L 5G </include>
+          </rat_capability>
+          <stop />
+        </then>
+        <else>
+          <rat_capability base="none">
+            <include> G W L </include>
+          </rat_capability>
+          <stop />
+        </else>
+      </if>
+    </then>
+  </if>
+  <!-- END RULE: Add VF carriers require to enable 5G roaming -->
+
+  <!-- START RULE: ESN just support Volte over HPLMN and EE NW -->
+  <if>
+    <imsi_plmn_in list="plmn_esn-uk" />
+    <then>
+      <if>
+        <any_of>
+          <serving_plmn_in list="plmn_esn-uk" />
+          <serving_plmn_in list="plmn_ee-uk" />
+        </any_of>
+        <then>
+          <voice_domain_pref mandatory="true"> IMS_PREF </voice_domain_pref>
+        </then>
+        <else>
+          <voice_domain_pref mandatory="true"> CS_ONLY </voice_domain_pref>
+        </else>
+      </if>
+    </then>
+  </if>
+  <!-- End RULE: ESN just support Volte over HPLMN and EE NW -->
+
+  <!-- b/155046665, START RULE: SIM & Serving PLMN based enabling 5G -->
+  <if>
+    <any_of>
+      <imsi_plmn_in list="plmn_ee-uk" />
+    </any_of>
+    <then>
+      <if>
+        <any_of>
+          <serving_plmn_in list="plmn_ee-uk" />
+        </any_of>
+        <then>
+          <rat_capability base="none">
+            <include> G W L 5G </include>
+          </rat_capability>
+          <stop />
+        </then>
+      </if>
+    </then>
+  </if>
+  <if>
+    <any_of>
+      <imsi_plmn_in list="plmn_o2-de" />
+    </any_of>
+    <then>
+      <if>
+        <any_of>
+          <serving_plmn_in list="plmn_o2-de" />
+        </any_of>
+        <then>
+          <rat_capability base="none">
+            <include> G W L 5G </include>
+          </rat_capability>
+          <stop />
+        </then>
+      </if>
+    </then>
+  </if>
+  <!-- b/155046665, END RULE: SIM & Serving PLMN based enabling 5G -->
+
+  <!-- b/155046665, START RULE: SIM based enabling 5G -->
+  <if>
+    <any_of>
+      <imsi_plmn_in list="plmn_hut3-uk" />
+      <imsi_plmn_in list="plmn_o2-uk" />
+      <imsi_plmn_in list="plmn_orange-fr" />
+      <imsi_plmn_in list="plmn_boygues-fr" />
+      <imsi_plmn_in list="plmn_sfr-fr" />
+      <imsi_plmn_in list="plmn_freemobile-fr" />
+      <imsi_plmn_in list="plmn_movistar-es" />
+    </any_of>
+    <then>
+      <rat_capability base="none">
+        <include> G W L 5G </include>
+      </rat_capability>
+      <stop />
+    </then>
+    <else>
+      <rat_capability base="none">
+        <include> G W L </include>
+      </rat_capability>
+      <stop />
+    </else>
+  </if>
+  <!-- b/155046665, END RULE: SIM based enabling 5G -->
+
+</policy>
+<!-- #endif /* FEATURE_PIXEL_MODEM_POLICY_ENHANCEMENT */ -->
