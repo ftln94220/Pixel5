@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Device configuration file for pixel config
+$Header: //modem_config/mcfg/pixel_mcfg/config/Pixel/common/SDX55/pixel_config.xml#1 $
+-->
+<policy name        = "Pixel Config"
+        changelist  = "$Change: 18922297 $"
+        policy_ver  = "0000.0.1"
+>
+
+ <if>
+    <any_of>
+      <not> <phone_operating_mode> ONLINE </phone_operating_mode> </not>
+      <not> <have_location /> </not>
+    </any_of>
+    <then>
+      <svc_mode> FULL_RAT </svc_mode>
+      <stop />
+    </then>
+  </if>
+
+  <!-- Beyond this point, the device is ONLINE and has a location. -->
+  <svc_mode> FULL </svc_mode>
+
+</policy>

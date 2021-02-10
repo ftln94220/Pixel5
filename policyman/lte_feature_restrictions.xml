@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Post Policy for LTE feature
+$Header:  $
+-->
+<policy name        = "LTE FEATURE RESTRICTION"
+        changelist  = "$Change: 19373687 $"
+        policy_ver  = "1103.2.6"
+>
+
+  <initial>
+
+    <mcc_list name="disable_7dlca_mccs" ns="global"> 460 </mcc_list>
+
+    <mcc_list name="disable_laa_mccs" ns="global"> 460 </mcc_list>
+
+    <mcc_list name="disable_6dlca_lic_mccs" ns="global"> 460 </mcc_list>
+
+    <mcc_list name="disable_6dlca_unlic_mccs" ns="global"> 460 </mcc_list>
+
+    <plmn_list name="sprint_plmns">
+      310-120 311-490 311-870 311-940
+    </plmn_list>
+
+    <mcc_list name="post:china_mccs" ns="global"> 460 </mcc_list>
+
+    <plmn_list name="post:cmcc_imsi" ns="global"> 
+      460-00 460-02 460-04 460-07 460-08 
+    </plmn_list>
+
+    <plmn_list name="dss_plmns" ns="global">
+      228-01 505-01 505-11 505-39 505-71 505-72 204-04 262-02 204-16 204-20 232-03 232-04 232-07
+    </plmn_list>
+
+    <plmn_list name="plmn_att">310-170 310-380 310-90 310-280 310-70 310-410 310-980 310-560 310-30 311-180 310-680 310-950 310-190</plmn_list>
+    <plmn_list name="plmn_cricket">310-150</plmn_list>
+    <plmn_list name="plmn_firstnet">312-670 313-100 313-110 313-120 313-130 313-140</plmn_list>
+    <plmn_list name="plmn_rogers">302-37 302-72 302-370 302-660 302-720</plmn_list>
+    <plmn_list name="plmn_dtag (high)">262-01</plmn_list>
+    <plmn_list name="plmn_vfie">272-01</plmn_list>
+    <plmn_list name="plmn_testra">505-01 505-11 505-71 505-72 530-04</plmn_list>
+    <plmn_list name="plmn_vzw">310-004 310-010 310-012 310-013 310-590 310-890 310-910 311-110 311-270 311-271 311-272 311-273 311-274 311-275 311-276 311-277 311-278 311-279 311-280 311-281 311-282 311-283 311-284 311-285 311-286 311-287 311-288 311-289 311-390 311-480 311-481 311-482 311-483 311-484 311-485 311-486 311-487 311-488 311-489</plmn_list>
+    <plmn_list name="plmn_tmo">310-160 310-200 310-210 310-220 310-230 310-240 310-250 310-260 310-270 310-310 310-490 310-660 310-800</plmn_list>
+
+  </initial>
+
+  <lte_feature name="LAA">
+    <not> <location_mcc_in subs="this" list="disable_laa_mccs" /> </not>
+  </lte_feature>
+
+  <lte_feature name="6DLCA_UNLIC">
+    <not> <location_mcc_in subs="this" list="disable_6dlca_unlic_mccs" /> </not>
+  </lte_feature>
+
+  <lte_feature subs="this" name="7DLCA_UNLIC">
+    <all_of>
+      <not> <location_mcc_in subs="this" list="disable_7dlca_mccs" /> </not>
+      <not> <serving_plmn_in list="sprint_plmns"  /> </not>
+    </all_of>
+  </lte_feature>
+
+  <lte_feature subs="this" name="6DLCA_LIC">
+    <all_of>
+      <not> <location_mcc_in subs="this" list="disable_6dlca_lic_mccs" /> </not>
+      <not> <serving_plmn_in list="sprint_plmns"  /> </not>	  
+    </all_of>
+  </lte_feature>
+
+  <lte_feature name="NONDDS_APS">
+    <all_of>
+      <imsi_plmn_in list="post:cmcc_imsi" />
+      <imsi_plmn_in subs="other" list="post:cmcc_imsi" />
+      <serving_mcc_in subs="all" list="post:china_mccs" />
+    </all_of>
+  </lte_feature>
+
+  <lte_feature name="NR_DSS">
+    <all_of>
+      <boolean_test name="carrier:dss_is_enabled" />
+      <any_of>
+        <serving_plmn_in list="plmn_att" />
+        <serving_plmn_in list="plmn_cricket" />
+        <serving_plmn_in list="plmn_firstnet" />
+        <serving_plmn_in list="plmn_rogers" />
+        <serving_plmn_in list="plmn_dtag (high)" />
+        <serving_plmn_in list="plmn_vfie" />
+        <serving_plmn_in list="plmn_testra" />
+        <serving_plmn_in list="plmn_vzw" />
+        <serving_plmn_in list="plmn_tmo" />
+      </any_of>
+    </all_of>
+  </lte_feature>
+
+</policy>

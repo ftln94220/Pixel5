@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Post Policy for Canada location
+#ifdef FEATURE_PIXEL_MODEM_POLICY_ENHANCEMENT
+-->
+<policy name        = "Canada Band Restrictions"
+        changelist  = "$Change: 20200206 $"
+        policy_ver  = "0.0.1"
+>
+
+  <initial>
+
+    <mcc_list name="post:canada_mccs" ns="global"> 302 </mcc_list>
+
+    <rf_band_list ns="global" name="post:canada_compliant_bands">
+      <gw_bands  base="current" />
+      <lte_bands base="current">
+        <exclude> 41 </exclude>
+      </lte_bands>
+      <tds_bands base="current" />
+      <nr5g_sa_bands base="current" />
+      <nr5g_nsa_bands base="current" />
+    </rf_band_list>
+
+    <rf_band_list ns="global" name="post:default_bands">
+      <gw_bands  base="current" />
+      <lte_bands base="current" />
+      <tds_bands base="current" />
+      <nr5g_sa_bands base="current" />
+      <nr5g_nsa_bands base="current" />
+    </rf_band_list>
+
+    <define_fullrat_config is_post="true">
+      <rf_bands list="post:default_bands" />
+    </define_fullrat_config>
+
+  </initial>
+
+  <if>
+    <any_of>
+      <not> <phone_operating_mode> ONLINE </phone_operating_mode> </not>
+      <not> <have_location /> </not>
+    </any_of>
+    <then>
+      <stop />
+    </then>
+  </if>
+
+  <svc_mode> FULL </svc_mode>
+
+  <if>
+    <location_mcc_in list="post:canada_mccs" />
+    <then>
+      <rf_bands list="post:canada_compliant_bands" />
+    </then>
+    <else>
+      <rf_bands list="post:default_bands" />
+    </else>
+  </if>
+
+</policy>
+<!-- #endif /* FEATURE_PIXEL_MODEM_POLICY_ENHANCEMENT */ -->

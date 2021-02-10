@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Remove NR SA mmWave bands from RF HW supported bands
+1) The bands listed here (in bit form) are the bands to be filtered with hardware bands
+2) The absence of a band set indicates that no bands will be filtered and hardware bands will be as RF indicates.
+3) Remove EFS /policyman/persisted_items/ whenever adding, modifying or removing this XML
+$Header: //components/rel/mmcp.mpss/10.0/policyman/configurations/HW_Filtering/disable_sa_mmwave/hardware_band_filtering.xml#1 $
+-->
+
+<hw_bands_filter>
+  <gw_bands> 0-63 </gw_bands>
+  <tds_bands> 0-63 </tds_bands>
+  <lte_bands> 0-255 </lte_bands>
+  <nr5g_sa_bands> 0-255 </nr5g_sa_bands>
+  <nr5g_nsa_bands> 0-511 </nr5g_nsa_bands>  
+</hw_bands_filter>

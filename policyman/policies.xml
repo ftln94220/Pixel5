@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Execution Ordering Configuration file
+-->
+<policy_list name        = "XML Ordering"
+             changelist  = "$Change: 20360423 $"
+             policy_ver  = "8000.0.7"
+>
+  <policy file="/policyman/device_config.xml" execute_for="device" load_for="device" refresh_on_sim_change="false" />
+  <!-- Pixel MOD begin b/140220750 include pixel_config.xml to do FULL_SCAN in Automatic REQ after ACQ_DB_PWR_UP scan in Limited REQ -->
+  <policy file="/policyman/pixel_config.xml" execute_for="device" load_for="device" refresh_on_sim_change="false" />
+  <!-- Pixel MOD end b/140220750 include pixel_config.xml to do FULL_SCAN in Automatic REQ after ACQ_DB_PWR_UP scan in Limited REQ -->
+  <policy file="/policyman/carrier_policy.xml" execute_for="subs" load_for="subs" refresh_on_sim_change="true" />
+  <policy file="/policyman/post.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/us_fcc_band_restrictions.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <!-- Pixel MOD begin b/147402653 comply with Canada regulatory band restrict -->
+  <policy file="/policyman/ca_fcc_band_restrictions.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <!-- Pixel MOD end b/147402653 comply with Canada regulatory band restrict -->
+  <policy file="/policyman/china_msim_restrictions.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/china_msim_lna_protection.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/disable_sa_bands.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/disable_nsa_mmwave_bands.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/lte_feature_restrictions.xml" execute_for="subs" load_for="device" refresh_on_sim_change="false" />
+  <policy file="/policyman/restrictions.xml" execute_for="subs" load_for="subs" refresh_on_sim_change="false" />
+  <policy file="/policyman/segment_loading.xml" execute_for="subs" load_for="subs" refresh_on_sim_change="false" />
+  <policy file="/nv/item_files/modem/lte/rrc/lte_feature_ca.xml" execute_for="subs" load_for="subs" refresh_on_sim_change="true" />
+</policy_list>

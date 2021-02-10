@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Device configuration file for single sim CHGWLT config 
+$Header: //commercial/MPSS.HI.2.0.c8/Main/modem_proc/mmcp/policyman/configurations/DevConfig/SS/device_config.xml#1 $
+-->
+<policy name        = "Single SIM Device Config"
+        changelist  = "$Change: 26214001 $"
+        policy_ver  = "2025.1.5"
+>
+
+  <initial>
+
+    <device_configuration num_sims = "1" max_active = "1">
+      <config primary="C H G W L T 5G" />
+    </device_configuration>
+
+  </initial>
+
+</policy>
