@@ -5,6 +5,7 @@
 
 - Modify Bands Tutorial https://mt-tech.fi/en/modify-oneplus-7-pro-5g-8-and-8-pro-nr-lte-a-band-combos/ 
 - Qualcom tools a drivers https://freebox.lear.ovh/share/evKn9vDPX_19qT4l/Mi5_Qualcomm_Drivers.zip / https://freebox.lear.ovh/share/f95F3r5V_eKVjlej/QPST_2.7.496.zip
+- Google Pixel Usb drivers https://developer.android.com/studio/run/win-usb
 
 # XDA Threads
 - Success Stories https://forum.xda-developers.com/t/how-to-add-5g-configurations-to-your-pixel-5-solved.4187025/
@@ -13,7 +14,7 @@
 # How to enable qualcom diag
 - Root device
 - Enable usb debugging
-- Install google phone drivers
+- Install google phone drivers: https://developer.android.com/studio/run/win-usb
 - Connect phone to PC
 - Download ADB https://developer.android.com/studio/releases/platform-tools
 - Unzip folder and open cmd prompt in folder
